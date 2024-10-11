@@ -3,7 +3,9 @@ import User from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js";
 import Assignment from "../models/assignmentModel.js";
 import { assignmentStatus } from "../utils/assignmentStatus.js";
-
+// @desc       Admin login
+// @route      POST /api/admin/login
+// @access     Public
 const adminLogin = asyncHandler(async (req, res) => {
     const { email, password} = req.body;
     const user = await User.findOne({email: email});
@@ -20,7 +22,9 @@ const adminLogin = asyncHandler(async (req, res) => {
         throw new Error("Invalid email or password")
     }
 });
-
+// @desc       Admin registration
+// @route      POST /api/admin/register
+// @access     Public
 const adminRegister = asyncHandler(async (req, res) => {
     const {name, email, password} = req.body;
 
@@ -47,7 +51,9 @@ const adminRegister = asyncHandler(async (req, res) => {
         throw new Error("Invalid User data")
     }
 });
-
+// @desc       Get all admins
+// @route      GET /api/admins
+// @access     Private
 const getAllAdmins = asyncHandler(async (req, res) => {
     const admins = await User.find({admin: true}).select('-password');
     res.status(201).json({
@@ -55,7 +61,9 @@ const getAllAdmins = asyncHandler(async (req, res) => {
     })
 
 })
-
+// @desc       Get all assignments for an admin
+// @route      GET /api/admin/assignments
+// @access     Private
 const getAllAssignments = asyncHandler(async (req, res) => {
     const adminName = req.user.name;
 
@@ -69,7 +77,9 @@ const getAllAssignments = asyncHandler(async (req, res) => {
         assignments: assignments
      })
 });
-
+// @desc       Accept an assignment
+// @route      POST /api/admin/assignments/:id/accept
+// @access     Private
 const acceptAssignment = asyncHandler(async (req, res) => {
     const assignmentId = req.params.id;
 
@@ -88,7 +98,9 @@ const acceptAssignment = asyncHandler(async (req, res) => {
         assignment: assignment
      })
 });
-
+// @desc       Reject an assignment
+// @route      POST /api/admin/assignments/:id/reject
+// @access     Private
 const rejectAssignment = asyncHandler(async (req, res) => {
     const assignmentId = req.params.id;
 
