@@ -4,8 +4,9 @@ import generateToken from "../utils/generateToken.js";
 import Assignment from "../models/assignmentModel.js";
 import { assignmentStatus } from "../utils/assignmentStatus.js";
 
-
-
+// @desc       User login
+// @route      POST /api/users/login
+// @access     Public
 const userLogin = asyncHandler(async (req, res) => {
     const { email, password} = req.body;
     const user = await User.findOne({email: email});
@@ -22,7 +23,9 @@ const userLogin = asyncHandler(async (req, res) => {
         throw new Error("Invalid email or password")
     }
 });
-
+// @desc       User registration
+// @route      POST /api/users/register
+// @access     Public
 const userRegister = asyncHandler(async (req, res) => {
     const {name, email, password} = req.body;
 
@@ -49,7 +52,9 @@ const userRegister = asyncHandler(async (req, res) => {
         throw new Error("Invalid User data")
     }
 });
-
+// @desc       User upload assignment
+// @route      POST /api/users/upload
+// @access     Private
 const userUploadAssignment = asyncHandler(async (req, res) => {
     const userId = req.user._id;
     const userName = req.user.name;
